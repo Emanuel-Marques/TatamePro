@@ -44,7 +44,7 @@ CREATE TABLE professores (
     FOREIGN KEY (utilizador_id) REFERENCES utilizadores(utilizador_id) ON DELETE SET NULL
 );
 
-CREATE TABLE IF NOT EXISTS professor_modalidade (
+CREATE TABLE IF NOT EXISTS modalidades_professores (
     professor_id INT NOT NULL,
     modalidade_id INT NOT NULL,
     PRIMARY KEY (professor_id, modalidade_id),
