@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS alunos (
+    aluno_id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    numero_bi VARCHAR(13) UNIQUE NOT NULL,
+    data_nascimento DATE NOT NULL,
+    nome_pai VARCHAR(255) NOT NULL,
+    nome_mae VARCHAR(255) NOT NULL,
+    endereco VARCHAR(255) NOT NULL,
+    genero VARCHAR(13) NOT NULL,
+    telefone VARCHAR(9) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
