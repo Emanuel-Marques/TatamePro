@@ -33,11 +33,11 @@ CREATE TABLE IF NOT EXISTS alunos (
     email VARCHAR(255) UNIQUE NOT NULL,
     bolseiro BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_usuario) REFERENCES utilizadores(id_usuario) ON DELETE SET NULL,
+    FOREIGN KEY (utilizador_id) REFERENCES utilizadores(utilizador_id) ON DELETE SET NULL,
     FOREIGN KEY (modalidade_id) REFERENCES modalidades(modalidade_id) ON DELETE CASCADE
 );
 
-CREATE TABLE professores (
+CREATE TABLE IF NOT EXISTS professores (
     professor_id INT AUTO_INCREMENT PRIMARY KEY,
     utilizador_id INT NULL UNIQUE,
     especialidade VARCHAR(255) NOT NULL,
