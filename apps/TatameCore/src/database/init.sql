@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS alunos (
 CREATE TABLE IF NOT EXISTS professores (
     professor_id INT AUTO_INCREMENT PRIMARY KEY,
     utilizador_id INT NULL UNIQUE,
+    nome VARCHAR(255) NOT NULL,
     especialidade VARCHAR(255) NOT NULL,
     FOREIGN KEY (utilizador_id) REFERENCES utilizadores(utilizador_id) ON DELETE SET NULL
 );
