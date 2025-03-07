@@ -35,20 +35,33 @@ async function getById(modalidadeId) {
       const [result] = await connection.query(query, [modalidadeId]);
       return result;
     } catch (error) {
-      console.error('Erro ao buscar modalidade: ', error);
+      console.error('Erro ao buscar modalidade pelo id: ', error);
     }
 }
 
-async function update(modalidadeId) {
+async function update(modalidadeId, nomeModalidade) {
     const query = `
       UPDATE modalidades SET nome_modalidade = ?  
+      WHERE modalidade_id = ?;
+      `;
+    try {
+      const [result] = await connection.query(query, [nomeModalidade,modalidadeId]);
+      return result;
+    } catch (error) {
+      console.error('Erro ao actualizar modalidade: ', error);
+    }
+}
+
+async function deleteModalidade(modalidadeId) {
+    const query = `
+      DELETE FROM modalidades 
       WHERE modalidade_id = ?;
       `;
     try {
       const [result] = await connection.query(query, [modalidadeId]);
       return result;
     } catch (error) {
-      console.error('Erro ao buscar modalidade: ', error);
+      console.error('Erro ao deletar modalidade: ', error);
     }
 }
 
