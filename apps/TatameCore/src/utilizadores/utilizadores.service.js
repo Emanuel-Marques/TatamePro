@@ -1,6 +1,17 @@
+import { encryptPassword } from '../utils/bcrypt.js';
 import utilizadoresModel from './utilizadores.model.js';
 async function create(utilizador) {
-  const result = await utilizadoresModel.create(utilizador);
+  
+  const senhaEncriptada = await encryptPassword(utilizador.senha);
+
+  const utilizadorEncriptado = {
+    nome: utilizador.nome,
+    email: utilizador.email,
+    senha: senhaEncriptada,
+    perfil: utilizador.perfil
+  } 
+  console.log(`Senha com hash ${senhaEncriptada}`);
+  const result = await utilizadoresModel.create(utilizadorEncriptado);
   return result;
 }
 
@@ -15,7 +26,8 @@ async function getById(utilizadorId) {
 }
 
 async function update(utilizadorId, nome, email, senha, perfil) {
-    const result = await utilizadoresModel.update(utilizadorId,  nome, email, senha, perfil);
+    const senhaEncriptada = await encryptPassword(senha);
+    const result = await utilizadoresModel.update(utilizadorId,  nome, email, senhaEncriptada, perfil);
     return result;
 }
 
