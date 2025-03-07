@@ -18,7 +18,21 @@ async function getAll() {
       SELECT *  FROM modalidades;
       `;
     try {
-      const [result] = await connection.query(query, [nomeModalidade]);
+      const [result] = await connection.query(query);
+      return result;
+    } catch (error) {
+      console.error('Erro ao buscar modalidade: ', error);
+    }
+}
+
+
+async function getById(modalidadeId) {
+    const query = `
+      SELECT *  FROM modalidades 
+      WHERE modalidade_id = ?;
+      `;
+    try {
+      const [result] = await connection.query(query, [modalidadeId]);
       return result;
     } catch (error) {
       console.error('Erro ao buscar modalidade: ', error);
@@ -29,5 +43,5 @@ async function getAll() {
 export default {
   create,
   getAll,
-
+  getById
 };
