@@ -41,30 +41,30 @@ async function update(req, res) {
     return res.status(400).json({ message: "id ou campos inexistentes!" });
   }
 
-  const modalidade = await utilizadoresService.getById(utilizadorId);
-  if (modalidade.length == 0) {
-    return res.status(404).json({ message: "Modalidade não encontrada!" });
+  const utilizador = await utilizadoresService.getById(utilizadorId);
+  if (utilizador.length == 0) {
+    return res.status(404).json({ message: "utilizador não encontrado!" });
   }
 
-  const result = await utilizadoresService.update(modalidadeId, nomeModalidade);
+  const result = await utilizadoresService.update(utilizadorId, nome, email, senha, perfil);
 
   res.status(204).json();
 }
 
 async function deleteUtilizador(req, res) {
-    const { modalidadeId } = req.params;
+    const { utilizadorId } = req.params;
   
-    if (!modalidadeId || Number.isNaN(modalidadeId) ) {
+    if (!utilizadorId || Number.isNaN(utilizadorId) ) {
       return res.status(400).json({ message: "id inexistente!" });
     }
   
-    const modalidade = await utilizadoresService.getById(modalidadeId);
+    const utilizador = await utilizadoresService.getById(utilizadorId);
 
-    if (modalidade.length == 0) {
-      return res.status(404).json({ message: "Modalidade não encontrada!" });
+    if (utilizador.length == 0) {
+      return res.status(404).json({ message: "Utilizador não encontrado!" });
     }
   
-    const result = await utilizadoresService.deleteUtilizador(modalidadeId);
+    const result = await utilizadoresService.deleteUtilizador(utilizadorId);
   
     res.status(204).json();
   }
