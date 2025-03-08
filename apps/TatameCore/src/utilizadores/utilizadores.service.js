@@ -1,5 +1,6 @@
 import { encryptPassword } from '../utils/bcrypt.js';
 import utilizadoresModel from './utilizadores.model.js';
+
 async function create(utilizador) {
   
   const senhaEncriptada = await encryptPassword(utilizador.senha);
@@ -10,7 +11,7 @@ async function create(utilizador) {
     senha: senhaEncriptada,
     perfil: utilizador.perfil
   } 
-  console.log(`Senha com hash ${senhaEncriptada}`);
+  
   const result = await utilizadoresModel.create(utilizadorEncriptado);
   return result;
 }

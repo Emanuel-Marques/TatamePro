@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS alunos (
     utilizador_id INT NULL UNIQUE,
     modalidade_id INT NOT NULL,
     nome VARCHAR(255) NOT NULL,
-    numero_bi VARCHAR(13) UNIQUE NOT NULL,
+    numero_bi VARCHAR(14) UNIQUE NOT NULL,
     data_nascimento DATE NOT NULL,
     nome_pai VARCHAR(255) NOT NULL,
     nome_mae VARCHAR(255) NOT NULL,
