@@ -1,5 +1,8 @@
+import alunosService from '../alunos/alunos.service.js';
 import matriculasService from './matriculas.model.js';
-async function create(matricula) {
+async function create(matricula, aluno) {
+  const { insertId } = await alunosService.create(aluno);
+  matricula.alunoId = insertId;
   const result = await matriculasService.create(matricula);
   return result;
 }

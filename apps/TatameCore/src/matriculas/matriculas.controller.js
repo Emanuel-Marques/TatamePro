@@ -1,14 +1,21 @@
 import matriculasService from "./matriculas.service.js";
 
 async function create(req, res) {
-  const { alunoId, planoId, dataInicio, estado } = req.body;
-  if (!alunoId || !planoId || !dataInicio ) {
+  const { planoId, dataInicio, estado, modalidadeId, nome, numeroBI, dataNascimento, nomePai, 
+    nomeMae, endereco, genero, telefone, email, bolseiro } = req.body;
+
+  if ( !planoId || !dataInicio || !modalidadeId || !nome || !numeroBI || !dataNascimento || !nomePai ||
+    !nomeMae || !endereco || !genero || !telefone || !email || !bolseiro ) {
     return res
       .status(400)
       .json({ message: "Todos os campos são obrigatórios!" });
   }
-  const matricula = { alunoId, planoId, dataInicio, estado };
-  const { insertId } = await matriculasService.create(matricula);
+
+  const matricula = { planoId, dataInicio, estado };
+  const aluno = { modalidadeId, nome, numeroBI, dataNascimento, nomePai, 
+    nomeMae, endereco, genero, telefone, email, bolseiro };
+  
+  const { insertId } = await matriculasService.create(matricula, aluno);
   res.status(201).json({ insertId });
 }
 
