@@ -21,7 +21,6 @@ export async function gerarCobrancas(){
 
         
         const cobrancaExistente = await cobrancasService.getByMatriculaEData(matricula_id, dataVencimento);
-        console.log(cobrancaExistente.length);
         if (cobrancaExistente == 0) {
             
             const { insertId } = await cobrancasService.create(matricula_id, valorMensalidade, dataVencimento);
