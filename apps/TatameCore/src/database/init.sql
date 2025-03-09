@@ -69,7 +69,8 @@ CREATE TABLE IF NOT EXISTS cobrancas (
     valor DECIMAL(10,2) NOT NULL,
     data_vencimento DATE NOT NULL,
     estado ENUM('Pendente', 'Pago', 'Vencido') NOT NULL DEFAULT 'Pendente',
-    FOREIGN KEY (matricula_id) REFERENCES matriculas(matricula_id) ON DELETE CASCADE
+    FOREIGN KEY (matricula_id) REFERENCES matriculas(matricula_id) ON DELETE CASCADE,
+    UNIQUE (matricula_id, data_vencimento)
 );
 
 CREATE TABLE IF NOT EXISTS pagamentos (

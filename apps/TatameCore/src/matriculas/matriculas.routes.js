@@ -3,6 +3,7 @@ import matriculasController from './matriculas.controller.js';
 const router = express.Router();
 
 router.get('/', matriculasController.getAll);
+router.get('/activas', matriculasController.getMatriculasActivas);
 router.get('/:matriculaId', matriculasController.getById);
 router.post('/cadastrar', matriculasController.create);
 router.put('/actualizar/:matriculaId', matriculasController.update);

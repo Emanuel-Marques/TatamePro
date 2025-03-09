@@ -66,11 +66,25 @@ async function deleteMatricula(matriculaId) {
     }
 }
 
+async function getMatriculasActivas(){
+  const query = `
+      SELECT * FROM matriculas
+      WHERE estado = 'Ativa';
+    `;
+    try {
+      const [result] = await connection.query(query);
+      return result;
+    } catch (error) {
+      console.error('Erro ao buscar matriculas ativas: ', error);
+    }
+}
+
 
 export default {
   create,
   getAll,
   getById,
   update,
-  deleteMatricula
+  deleteMatricula,
+  getMatriculasActivas
 };
