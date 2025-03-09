@@ -1,5 +1,5 @@
 import { connection } from '../database/config.js';
-async function create({ matriculaId, valor, dataVencimento, estado }){
+async function create( matriculaId, valor, dataVencimento, estado ){
     const query = `
         INSERT INTO cobrancas (matricula_id, valor, data_vencimento, estado)
         VALUES (?, ?, ?, ?)
