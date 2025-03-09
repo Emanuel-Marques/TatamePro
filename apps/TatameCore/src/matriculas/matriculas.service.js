@@ -27,10 +27,16 @@ async function deleteMatricula(matriculaId) {
     return result;
 }
 
+async function getMatriculasActivas(){
+  const result = await matriculasService.getMatriculasActivas();
+  return result;
+}
+
 export default {
   create,
   getAll,
   getById,
   update,
-  deleteMatricula
+  deleteMatricula,
+  getMatriculasActivas
 };
