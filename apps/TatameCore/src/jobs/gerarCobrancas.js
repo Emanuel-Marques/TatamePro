@@ -18,18 +18,21 @@ export async function gerarCobrancas(){
         const ultimaCobranca = await cobrancasService.getUltimaCobranca(matricula_id);
     
         let proximaDataVencimento;
+        let dataVencimento;
 
         if (ultimaCobranca) {
             proximaDataVencimento = new Date(ultimaCobranca.data_vencimento);
+            dataVencimento = new Date(ultimaCobranca.data_vencimento);
         } else {
             proximaDataVencimento = new Date(data_inicio);
+            dataVencimento = new Date(data_inicio);
         }
-
+        
         proximaDataVencimento.setMonth(proximaDataVencimento.getMonth() + duracaoMeses);
 
         const hoje = new Date();
 
-        if (hoje >= proximaDataVencimento || !ultimaCobranca) {
+        if (hoje >= dataVencimento) {
             const { insertId } = await cobrancasService.create(matricula_id, valorMensalidade, proximaDataVencimento);
             console.log(`Cobrança ${insertId} criada para matrícula ${matricula_id}, vencendo em ${proximaDataVencimento.toISOString().split('T')[0]}`);
         } else {
