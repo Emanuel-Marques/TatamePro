@@ -26,7 +26,24 @@ async function getByMatriculaEData( matriculaId, dataVencimento ){
     }
 }
 
+async function getUltimaCobranca(matriculaId) {
+    try {
+        const [ultimaCobranca] = await connection.execute(`
+            SELECT * FROM cobrancas 
+            WHERE matricula_id = ? AND estado = 'Pendente' 
+            ORDER BY data_vencimento DESC 
+            LIMIT 1
+        `, [matriculaId]);
+    
+        return ultimaCobranca.length > 0 ? ultimaCobranca[0] : null;
+    } catch (error) {
+        console.log('Erro ao buscar última cobrança: ', error);
+    }
+    
+}
+
 export default {
     create,
-    getByMatriculaEData
+    getByMatriculaEData,
+    getUltimaCobranca
 }
