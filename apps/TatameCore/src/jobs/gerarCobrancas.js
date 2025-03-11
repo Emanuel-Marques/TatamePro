@@ -12,21 +12,28 @@ export async function gerarCobrancas(){
         if(!plano || plano.length === 0) continue;
 
         const valorMensalidade = plano[0].valor_mensalidade;
-
-        // Definir a data de vencimento para o próximo mês
-        const hoje = new Date();
-        const mesAtual = hoje.getMonth() + 1; 
-        const anoAtual = hoje.getFullYear();
-        const dataVencimento = new Date(anoAtual, mesAtual, data_inicio.getDate());
+        const duracaoMeses = plano[0].duracao_meses;
 
         
-        const cobrancaExistente = await cobrancasService.getByMatriculaEData(matricula_id, dataVencimento);
-        if (cobrancaExistente == 0) {
-            
-            const { insertId } = await cobrancasService.create(matricula_id, valorMensalidade, dataVencimento);
-            console.log(`Cobrança ${insertId} criada para matrícula ${matricula_id}!`);
+        const ultimaCobranca = await cobrancasService.getUltimaCobranca(matricula_id);
+    
+        let proximaDataVencimento;
+
+        if (ultimaCobranca) {
+            proximaDataVencimento = new Date(ultimaCobranca.data_vencimento);
         } else {
-            console.log(`Cobrança já existe para matrícula ${matricula_id} na data ${dataVencimento.toISOString().split('T')[0]}`);
+            proximaDataVencimento = new Date(data_inicio);
+        }
+
+        proximaDataVencimento.setMonth(proximaDataVencimento.getMonth() + duracaoMeses);
+
+        const hoje = new Date();
+
+        if (hoje >= proximaDataVencimento || !ultimaCobranca) {
+            const { insertId } = await cobrancasService.create(matricula_id, valorMensalidade, proximaDataVencimento);
+            console.log(`Cobrança ${insertId} criada para matrícula ${matricula_id}, vencendo em ${proximaDataVencimento.toISOString().split('T')[0]}`);
+        } else {
+            console.log(`Ainda não é hora de criar nova cobrança para matrícula ${matricula_id}`);
         }
     }
 }
