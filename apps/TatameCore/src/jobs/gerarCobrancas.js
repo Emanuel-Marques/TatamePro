@@ -14,20 +14,19 @@ export async function gerarCobrancas(){
         const valorMensalidade = plano[0].valor_mensalidade;
         const duracaoMeses = plano[0].duracao_meses;
 
-        
         const ultimaCobranca = await cobrancasService.getUltimaCobranca(matricula_id);
     
         let proximaDataVencimento;
         let dataVencimento;
 
         if (ultimaCobranca) {
-            proximaDataVencimento = new Date(ultimaCobranca.data_vencimento);
             dataVencimento = new Date(ultimaCobranca.data_vencimento);
         } else {
-            proximaDataVencimento = new Date(data_inicio);
             dataVencimento = new Date(data_inicio);
         }
-        
+
+        dataVencimento.setDate(5);
+        proximaDataVencimento = new Date(dataVencimento);
         proximaDataVencimento.setMonth(proximaDataVencimento.getMonth() + duracaoMeses);
 
         const hoje = new Date();
