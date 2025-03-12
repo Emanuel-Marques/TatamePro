@@ -28,8 +28,10 @@ async function getByMatriculaEData( matriculaId, dataVencimento ){
 
 async function getByMatricula( matriculaId ){
     const query = `
-        SELECT * FROM cobrancas 
-        WHERE matricula_id = ?
+        SELECT cobrancas.cobranca_id, cobrancas.valor, cobrancas.data_vencimento, cobrancas.estado, matriculas.matricula_id, alunos.aluno_id, alunos.nome FROM cobrancas 
+        INNER JOIN matriculas ON cobrancas.matricula_id = matriculas.matricula_id
+        INNER JOIN alunos ON matriculas.aluno_id = alunos.aluno_id
+        WHERE cobrancas.matricula_id = ?
     `;
     try {
         const [result] = await connection.execute(query, [matriculaId]);
