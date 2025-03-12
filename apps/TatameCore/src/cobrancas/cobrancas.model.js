@@ -42,8 +42,36 @@ async function getUltimaCobranca(matriculaId) {
     
 }
 
+async function getById(cobrancaId){
+    const query = `
+    SELECT * FROM cobrancas 
+    WHERE cobranca_id = ?
+`;
+try {
+    const [result] = await connection.execute(query, [cobrancaId]);
+    return result;
+} catch (error) {
+    console.log('Erro ao buscar cobrança pelo id: ', error);
+} 
+}
+
+async function updateEstadoDaCobranca(cobrancaId, estado){
+    const query = `
+    UPDATE cobrancas SET estado = ?
+    WHERE cobranca_id = ?;
+    `;
+  try {
+    const [result] = await connection.query(query, [cobrancaId, estado]);
+    return result;
+  } catch (error) {
+    console.error('Erro ao actualizar estado da cobrança: ', error);
+  }
+}
+
 export default {
     create,
     getByMatriculaEData,
-    getUltimaCobranca
+    getUltimaCobranca,
+    getById,
+    updateEstadoDaCobranca
 }
