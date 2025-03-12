@@ -10,6 +10,11 @@ async function getByMatriculaEData(matriculaId, dataVencimento){
     return result; 
 }
 
+async function getByMatricula( matriculaId ){
+    const result = await cobrancasModel.getByMatricula(matriculaId);
+    return result; 
+}
+
 async function getUltimaCobranca(matriculaId){
     const result = await cobrancasModel.getUltimaCobranca(matriculaId);
     return result;
@@ -30,5 +35,6 @@ export default {
     getByMatriculaEData,
     getUltimaCobranca,
     getById,
-    updateEstadoDaCobranca
+    updateEstadoDaCobranca,
+    getByMatricula
 }

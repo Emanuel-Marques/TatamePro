@@ -86,5 +86,6 @@ export default {
     getByMatriculaEData,
     getUltimaCobranca,
     getById,
-    updateEstadoDaCobranca
+    updateEstadoDaCobranca,
+    getByMatricula
 }
