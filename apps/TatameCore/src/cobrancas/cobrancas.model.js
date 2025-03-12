@@ -26,6 +26,19 @@ async function getByMatriculaEData( matriculaId, dataVencimento ){
     }
 }
 
+async function getByMatricula( matriculaId ){
+    const query = `
+        SELECT * FROM cobrancas 
+        WHERE matricula_id = ?
+    `;
+    try {
+        const [result] = await connection.execute(query, [matriculaId]);
+        return result;
+    } catch (error) {
+        console.log('Erro ao buscar cobranças pela matricula: ', error);
+    }
+}
+
 async function getUltimaCobranca(matriculaId) {
     try {
         const [ultimaCobranca] = await connection.execute(`
@@ -61,7 +74,7 @@ async function updateEstadoDaCobranca(cobrancaId, estado){
     WHERE cobranca_id = ?;
     `;
   try {
-    const [result] = await connection.query(query, [cobrancaId, estado]);
+    const [result] = await connection.query(query, [estado, cobrancaId]);
     return result;
   } catch (error) {
     console.error('Erro ao actualizar estado da cobrança: ', error);
