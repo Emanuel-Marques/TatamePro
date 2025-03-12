@@ -15,8 +15,20 @@ async function getUltimaCobranca(matriculaId){
     return result;
 }
 
+async function getById(cobrancaId){
+    const result = await cobrancasModel.getById(cobrancaId);
+    return result;
+}
+
+async function updateEstadoDaCobranca(cobrancaId, estado){
+    const result = await cobrancasModel.updateEstadoDaCobranca(cobrancaId, estado);
+    return result; 
+}
+
 export default {
     create,
     getByMatriculaEData,
-    getUltimaCobranca
+    getUltimaCobranca,
+    getById,
+    updateEstadoDaCobranca
 }
