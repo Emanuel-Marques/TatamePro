@@ -4,7 +4,7 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha tests/**/*.test.js --exit",
     "dev": "node src/database/databaseInit.js && nodemon src/server.js"
   },
   "keywords": [],
@@ -19,6 +19,8 @@
     "node-cron": "^3.0.3"
   },
   "devDependencies": {
+    "chai": "5.2.0",
+    "mocha": "11.1.0",
     "nodemon": "^3.1.9"
   }
 }
