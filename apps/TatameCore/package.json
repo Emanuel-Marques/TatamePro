@@ -4,7 +4,8 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "test": "mocha tests/**/*.test.js --exit",
+    "test": "mocha --experimental-vm-modules tests/**/*.test.js --exit",
+    "coverage": "nyc npm run test",
     "dev": "node src/database/databaseInit.js && nodemon src/server.js"
   },
   "keywords": [],
@@ -19,8 +20,11 @@
     "node-cron": "^3.0.3"
   },
   "devDependencies": {
-    "chai": "5.2.0",
-    "mocha": "11.1.0",
-    "nodemon": "^3.1.9"
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.0.0",
+    "nodemon": "^3.1.9",
+    "nyc": "^17.1.0",
+    "sinon": "^14.0.0"
   }
 }
