@@ -7,8 +7,12 @@ import alunosRoutes from '../alunos/alunos.routes.js';
 import matriculasRoutes from '../matriculas/matriculas.routes.js';
 import pagamentosRoutes from '../pagamentos/pagamentos.routes.js';
 import cobrancasRoutes from '../cobrancas/cobrancas.routes.js';
+import authRoutes from '../auth/auth.routes.js';
+import { authMiddleware } from '../middlewares/index.js';
 const router = express.Router();
 
+router.use('/auth', authRoutes);
+router.use(authMiddleware);
 router.use('/modalidades', modalidadesRoutes);
 router.use('/utilizadores', utilizadoresRoutes);
 router.use('/planos', planosRoutes);
