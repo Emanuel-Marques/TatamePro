@@ -1,0 +1,143 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 20% 98%; /* #F9FAFB light gray */
+    --foreground: 220 13% 13%; /* #111827 almost black text */
+
+    --card: 0 0% 100%; /* #FFFFFF white */
+    --card-foreground: 220 13% 13%; /* #111827 almost black text */
+
+    --popover: 0 0% 100%; /* #FFFFFF white */
+    --popover-foreground: 220 13% 13%; /* #111827 almost black text */
+
+    --primary: 215 28% 17%; /* #1F2937 dark gray */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF white text on dark buttons */
+
+    --secondary: 220 9% 35%; /* #4B5563 medium gray */
+    --secondary-foreground: 0 0% 100%; /* #FFFFFF white text on secondary */
+
+    --muted: 220 14% 96%; /* slightly lighter than border */
+    --muted-foreground: 220 9% 50%; /* lighter than secondary */
+
+    --accent: 220 14% 96%; /* Light gray accent */
+    --accent-foreground: 215 28% 17%; /* #1F2937 dark text on light accent */
+
+    --destructive: 0 84% 60%; /* #EF4444 bright red */
+    --destructive-foreground: 0 0% 100%; /* White text on destructive */
+
+    --border: 220 13% 91%; /* #E5E7EB light gray border */
+    --input: 220 13% 91%; /* #E5E7EB light gray input borders */
+    --ring: 215 28% 17%; /* #1F2937 dark gray */
+
+    --radius: 0.5rem;
+
+    /* Sidebar styles for light mode */
+    --sidebar-background: 215 28% 17%; /* #1F2937 dark gray */
+    --sidebar-foreground: 0 0% 100%; /* White text */
+    --sidebar-primary: 220 9% 35%; /* #4B5563 medium gray */
+    --sidebar-primary-foreground: 0 0% 100%; /* White text */
+    --sidebar-accent: 215 28% 25%; /* Slightly lighter than background */
+    --sidebar-accent-foreground: 0 0% 100%; /* White text */
+    --sidebar-border: 215 28% 15%; /* Slightly darker than background */
+    --sidebar-ring: 0 0% 100%; /* White ring */
+  }
+
+  .dark {
+    --background: 215 28% 17%; /* #1F2937 dark gray */
+    --foreground: 210 40% 98%; /* #F1F5F9 off-white text */
+
+    --card: 217 33% 17%; /* #1E293B blue-gray */
+    --card-foreground: 210 40% 98%; /* #F1F5F9 off-white text */
+
+    --popover: 217 33% 17%; /* #1E293B blue-gray */
+    --popover-foreground: 210 40% 98%; /* #F1F5F9 off-white text */
+
+    --primary: 187 100% 53%; /* #22D3EE cyan */
+    --primary-foreground: 222 47% 11%; /* #0F172A dark text on light buttons */
+
+    --secondary: 217 19% 47%; /* #64748B medium gray-blue */
+    --secondary-foreground: 210 40% 98%; /* #F1F5F9 light text on secondary */
+
+    --muted: 217 19% 27%; /* slightly darker than secondary */
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 187 100% 53%; /* #22D3EE cyan */
+    --accent-foreground: 222 47% 11%; /* #0F172A dark text on accent */
+
+    --destructive: 0 84.2% 60.2%; /* #EF4444 red */
+    --destructive-foreground: 210 40% 98%; /* #F1F5F9 light text on destructive */
+
+    --border: 215 25% 27%; /* #334155 border color */
+    --input: 215 25% 27%; /* #334155 input borders */
+    --ring: 187 100% 53%; /* #22D3EE cyan */
+    
+    --sidebar-background: 222 47% 9%; /* Slightly darker than --background */
+    --sidebar-foreground: 210 40% 98%; /* #F1F5F9 light text */
+    --sidebar-primary: 187 100% 53%; /* #22D3EE cyan */
+    --sidebar-primary-foreground: 222 47% 11%; /* #0F172A dark text on light buttons */
+    --sidebar-accent: 187 100% 43%; /* Darker cyan for accent */
+    --sidebar-accent-foreground: 210 40% 98%; /* #F1F5F9 light text */
+    --sidebar-border: 217 33% 14%; /* Even darker for borders */
+    --sidebar-ring: 210 40% 98%; /* #F1F5F9 light ring */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  .tatame-card {
+    @apply bg-custom-card rounded-lg shadow-md p-5 border border-custom-border;
+  }
+  
+  .tatame-stat-card {
+    @apply flex flex-col gap-2 p-6 bg-custom-card rounded-lg border border-custom-border shadow-sm;
+  }
+  
+  .tatame-stat-value {
+    @apply text-2xl font-bold text-custom-text;
+  }
+  
+  .tatame-stat-label {
+    @apply text-sm text-custom-secondary font-medium;
+  }
+  
+  .tatame-dropdown-menu {
+    @apply z-50 bg-custom-card shadow-lg rounded-md border border-custom-border min-w-[12rem] overflow-hidden p-1;
+  }
+  
+  .tatame-table {
+    @apply w-full text-sm;
+  }
+  
+  .tatame-table th {
+    @apply text-left py-3 px-4 bg-custom-background font-medium text-custom-secondary border-b border-custom-border;
+  }
+  
+  .tatame-table td {
+    @apply py-3 px-4 border-b border-custom-border;
+  }
+  
+  .tatame-table tr:hover {
+    @apply bg-custom-background;
+  }
+
+  /* Custom button styles */
+  .btn-primary {
+    @apply bg-custom-primary text-white hover:bg-custom-primary/90 px-4 py-2 rounded-md;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border border-custom-secondary text-custom-secondary hover:bg-custom-secondary/10 px-4 py-2 rounded-md;
+  }
+}
