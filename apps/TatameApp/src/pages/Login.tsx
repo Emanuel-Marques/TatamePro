@@ -1,54 +1,85 @@
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/components/ui/use-toast";
+import api from "@/api/index";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "E-mail inválido" }),
-  password: z.string().min(6, { message: "A senha deve ter pelo menos 6 caracteres" }),
+  senha: z
+    .string()
+    .min(4, { message: "A senha deve ter pelo menos 4 caracteres" }),
 });
 
-type LoginFormValues = z.infer<typeof loginSchema>;
+export type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      try {
+        const response = await api.verifyToken();
+        if (response?.valid) {
+          navigate("/dashboard");
+        } else {
+          localStorage.removeItem("token");
+        }
+      } catch (err) {
+        console.error("Error verifying token:", err);
+      }
+    };
+
+    checkAuth();
+  }, []);
+
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
-      password: "",
+      senha: "",
     },
   });
 
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      // This would normally be an actual auth API call
-      if (data.email === "admin@tatamepro.com" && data.password === "password") {
-        toast({
-          title: "Login bem-sucedido",
-          description: "Bem-vindo ao TatamePro",
-        });
-        navigate("/dashboard");
-      } else {
-        toast({
-          title: "Erro de login",
-          description: "E-mail ou senha inválidos",
-          variant: "destructive",
-        });
-      }
+
+    const response = await api.login(data);
+    if (response.error) {
+      toast({
+        title: "Erro no login",
+        description: response.error,
+        variant: "destructive",
+      });
       setIsLoading(false);
-    }, 1000);
+      return;
+    }
+
+    if (response.data) {
+      localStorage.setItem("token", response.data);
+      toast({
+        title: "Login realizado com sucesso",
+        description: "Bem-vindo ao TatamePro",
+        variant: "default",
+      });
+      navigate("/dashboard");
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -61,8 +92,10 @@ export default function Login() {
           </p>
         </div>
         <div className="bg-card shadow-lg rounded-lg p-8 border border-border">
-          <h2 className="text-xl font-medium text-center mb-6 text-foreground">Login</h2>
-          
+          <h2 className="text-xl font-medium text-center mb-6 text-foreground">
+            Login
+          </h2>
+
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
@@ -84,10 +117,10 @@ export default function Login() {
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
-                name="password"
+                name="senha"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-foreground">Senha</FormLabel>
@@ -104,15 +137,15 @@ export default function Login() {
                   </FormItem>
                 )}
               />
-              
+
               <div className="text-sm text-right">
                 <a href="#" className="text-primary hover:text-primary/90">
                   Esqueceu a senha?
                 </a>
               </div>
-              
-              <Button 
-                type="submit" 
+
+              <Button
+                type="submit"
                 className="w-full text-center py-3"
                 disabled={isLoading}
               >
@@ -121,7 +154,7 @@ export default function Login() {
             </form>
           </Form>
         </div>
-        
+
         <div className="text-center mt-4">
           <p className="text-sm text-foreground/70">
             © 2023 TatamePro. Todos os direitos reservados.
