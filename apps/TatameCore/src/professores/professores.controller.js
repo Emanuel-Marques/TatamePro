@@ -1,4 +1,5 @@
 import professoresService from "./professores.service.js";
+import camelize from "camelize";
 
 async function create(req, res) {
   const { utilizadorId, nome, especialidade, telefone, grau } = req.body;
@@ -14,7 +15,7 @@ async function create(req, res) {
 
 async function getAll(req, res) {
   const result = await professoresService.getAll();
-  res.status(200).json({ data: result });
+  res.status(200).json({ data: camelize(result) });
 }
 
 async function getById(req, res) {
@@ -30,7 +31,7 @@ async function getById(req, res) {
     return res.status(404).json({ message: "professor não encontrado!" });
   }
 
-  res.status(200).json({ data: result });
+  res.status(200).json({ data: camelize(result) });
 }
 
 async function update(req, res) {

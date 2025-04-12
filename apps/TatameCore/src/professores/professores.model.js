@@ -21,7 +21,7 @@ async function create({ utilizadorId, nome, especialidade, telefone, grau }) {
 
 async function getAll() {
   const query = `
-      SELECT professores.professor_id, utilizadores.email, professores.estado, professores.especialidade, professores.data_inicio, professores.grau, professores.telefone FROM professores 
+      SELECT professores.nome, professores.professor_id, utilizadores.email, professores.estado, professores.especialidade, professores.data_inicio, professores.grau, professores.telefone FROM professores 
       INNER JOIN utilizadores ON professores.utilizador_id = utilizadores.utilizador_id
       `;
   try {
