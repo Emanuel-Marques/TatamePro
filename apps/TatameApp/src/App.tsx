@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +17,7 @@ import Reports from "./pages/Reports";
 import NotFound from "./pages/NotFound";
 import AthleteProfile from "./pages/AthleteProfile";
 import Settings from "./pages/Settings";
+import Loader from "./components/auth/Loader";
 
 const queryClient = new QueryClient();
 
@@ -30,18 +30,20 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/atletas" element={<Athletes />} />
-          <Route path="/atletas/:id" element={<AthleteProfile />} />
-          <Route path="/financeiro" element={<Finance />} />
-          <Route path="/aulas" element={<Classes />} />
-          <Route path="/modalidades" element={<Modalities />} />
-          <Route path="/instrutores" element={<Instructors />} />
-          <Route path="/planos" element={<Plans />} />
-          <Route path="/matricula" element={<Registration />} />
-          <Route path="/relatorios" element={<Reports />} />
-          <Route path="/definicoes" element={<Settings />} />
-          <Route path="/perfil" element={<Settings />} />
+          <Route element={<Loader />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/atletas" element={<Athletes />} />
+            <Route path="/atletas/:id" element={<AthleteProfile />} />
+            <Route path="/financeiro" element={<Finance />} />
+            <Route path="/aulas" element={<Classes />} />
+            <Route path="/modalidades" element={<Modalities />} />
+            <Route path="/instrutores" element={<Instructors />} />
+            <Route path="/planos" element={<Plans />} />
+            <Route path="/matricula" element={<Registration />} />
+            <Route path="/relatorios" element={<Reports />} />
+            <Route path="/definicoes" element={<Settings />} />
+            <Route path="/perfil" element={<Settings />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
