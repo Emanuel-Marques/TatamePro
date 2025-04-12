@@ -59,6 +59,17 @@ export type InstructorData = {
   status: "active" | "inactive";
 };
 
+export type InstrutorData = {
+  professorId: number;
+  nome: string;
+  email: string;
+  telefone: string;
+  especialidade: string;
+  grau?: string;
+  dataInicio: string;
+  estado: "ativo" | "inativo";
+};
+
 export type PlanData = {
   id: string;
   name: string;
