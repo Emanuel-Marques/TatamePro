@@ -42,6 +42,10 @@ CREATE TABLE IF NOT EXISTS professores (
     utilizador_id INT NULL UNIQUE,
     nome VARCHAR(255) NOT NULL,
     especialidade VARCHAR(255) NOT NULL,
+    data_inicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    telefone VARCHAR(9) NOT NULL,
+    grau VARCHAR(50),
+    estado ENUM('Ativo', 'Inativo') NOT NULL DEFAULT 'Ativo',
     FOREIGN KEY (utilizador_id) REFERENCES utilizadores(utilizador_id) ON DELETE SET NULL
 );
 
