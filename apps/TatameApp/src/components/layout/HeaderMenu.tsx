@@ -13,6 +13,10 @@ import { Link } from "react-router-dom";
 import { Settings, User, LogOut, Bell } from "lucide-react";
 
 export function HeaderMenu() {
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  };
   return (
     <div className="flex items-center gap-4">
       <Button variant="ghost" size="icon" className="relative">
@@ -46,7 +50,7 @@ export function HeaderMenu() {
           <DropdownMenuSeparator />
           <DropdownMenuItem className="cursor-pointer text-red-500">
             <LogOut className="mr-2 h-4 w-4" />
-            <span>Sair</span>
+            <span onClick={handleLogout}>Sair</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
