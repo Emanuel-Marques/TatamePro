@@ -93,8 +93,8 @@ export default function RegisterInstructorDialog({
         });
   
       // Reset form and close dialog
-      //form.reset();
-      //onOpenChange(false);
+      form.reset();
+      onOpenChange(false);
     } catch(error) {
         console.error("Error creating instructor:", error);
         toast.error("Erro ao cadastrar instrutor", {
