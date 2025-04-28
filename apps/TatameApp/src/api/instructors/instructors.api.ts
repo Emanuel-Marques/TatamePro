@@ -1,3 +1,4 @@
+import { InstrutorData } from "@/lib/data";
 import api from "../axiosConfig";
 
 const getAllInstructors = async () => {
@@ -9,4 +10,13 @@ const getAllInstructors = async () => {
   }
 };
 
-export default { getAllInstructors };
+const createInstructor = async (data: Partial<InstrutorData>) => {
+  try {
+    const response = await api.post("/professores/cadastrar", data);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating instructor:", error);
+  }
+}
+
+export default { getAllInstructors, createInstructor };
