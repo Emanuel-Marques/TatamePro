@@ -1,37 +1,59 @@
-
 import { useEffect, useState } from "react";
 import { MainLayout } from "@/components/layout/MainLayout";
-import { 
-  Table, TableHeader, TableBody, TableHead, 
-  TableRow, TableCell 
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { 
-  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, 
-  DropdownMenuItem, DropdownMenuSeparator 
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { 
-  Dialog, DialogTrigger, DialogContent, DialogHeader, 
-  DialogTitle, DialogDescription, DialogFooter
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import {
-  Award, Search, MoreVertical, UserPlus,
-  Eye, Edit, Trash2, Mail, Phone
+  Award,
+  Search,
+  MoreVertical,
+  UserPlus,
+  Eye,
+  Edit,
+  Trash2,
+  Mail,
+  Phone,
 } from "lucide-react";
 import { instructorsData, InstructorData, InstrutorData } from "@/lib/data";
 import api from "@/api";
+import RegisterInstructorDialog from "@/components/instructors/RegisterInstructorDialog";
 
 const Instructors = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
-  const [selectedInstructor, setSelectedInstructor] = useState<InstrutorData | null>(null);
+  const [selectedInstructor, setSelectedInstructor] =
+    useState<InstrutorData | null>(null);
   const [showDetailsDialog, setShowDetailsDialog] = useState(false);
   const [instructorsData, setInstructorsData] = useState<InstrutorData[]>([]);
-  useEffect(()=> {
+  const [showRegisterDialog, setShowRegisterDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  useEffect(() => {
     const fetchInstructors = async () => {
       try {
         const response = await api.instructorsApi.getAllInstructors();
@@ -42,21 +64,27 @@ const Instructors = () => {
       }
     };
     fetchInstructors();
-  }, []);
+  }, [showRegisterDialog, showEditDialog]);
 
   const filteredInstructors = instructorsData.filter((instructor) => {
-    const matchesSearch = instructor.nome.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      instructor.email.toLowerCase().includes(searchQuery.toLowerCase()) /*||
-      instructor.especialidade.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()))*/;
-    
-    const matchesStatus = statusFilter === "all" || instructor.estado === statusFilter;
-    
+    const matchesSearch =
+      instructor.nome.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      instructor.email.toLowerCase().includes(searchQuery.toLowerCase()); /*||
+      instructor.especialidade.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()))*/
+
+    const matchesStatus =
+      statusFilter === "all" || instructor.estado === statusFilter;
+
     return matchesSearch && matchesStatus;
   });
 
   const handleViewDetails = (instructor: InstrutorData) => {
     setSelectedInstructor(instructor);
     setShowDetailsDialog(true);
+  };
+
+  const handleRegisterInstructor = () => {
+    setShowRegisterDialog(true);
   };
 
   return (
@@ -69,17 +97,20 @@ const Instructors = () => {
           </p>
         </div>
         <div>
-          <Button className="bg-custom-primary text-white hover:bg-custom-primary/90">
+          <Button
+            className="bg-custom-primary text-white hover:bg-custom-primary/90"
+            onClick={handleRegisterInstructor}
+          >
             <UserPlus className="mr-2 h-4 w-4" /> Novo Instrutor
           </Button>
         </div>
       </header>
-      
+
       <Card className="p-4">
         <div className="mb-6 relative max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input 
-            placeholder="Buscar instrutores..." 
+          <Input
+            placeholder="Buscar instrutores..."
             className="pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -118,25 +149,35 @@ const Instructors = () => {
                   </TableCell>
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
-                        <Badge key={instructor.especialidade} variant="outline" className="bg-gray-100">
-                          {instructor.especialidade}
-                        </Badge>
+                      <Badge
+                        key={instructor.especialidade}
+                        variant="outline"
+                        className="bg-gray-100"
+                      >
+                        {instructor.especialidade}
+                      </Badge>
                       {/* Uncomment the below code if you want to display multiple specialties */}
-                      { /*instructor.especialidade.map((specialty) => (
+                      {/*instructor.especialidade.map((specialty) => (
                         <Badge key={specialty} variant="outline" className="bg-gray-100">
                           {specialty}
                         </Badge>
                       ))*/}
                     </div>
                   </TableCell>
-                  <TableCell className="hidden md:table-cell">{instructor.email}</TableCell>
-                  <TableCell className="hidden md:table-cell">{instructor.telefone}</TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {instructor.email}
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {instructor.telefone}
+                  </TableCell>
                   <TableCell>
-                    <Badge className={
-                      instructor.estado === "Ativo" 
-                        ? "bg-green-100 text-green-800 hover:bg-green-100"
-                        : "bg-red-100 text-red-800 hover:bg-red-100"
-                    }>
+                    <Badge
+                      className={
+                        instructor.estado === "Ativo"
+                          ? "bg-green-100 text-green-800 hover:bg-green-100"
+                          : "bg-red-100 text-red-800 hover:bg-red-100"
+                      }
+                    >
                       {instructor.estado}
                     </Badge>
                   </TableCell>
@@ -148,7 +189,9 @@ const Instructors = () => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => handleViewDetails(instructor)}>
+                        <DropdownMenuItem
+                          onClick={() => handleViewDetails(instructor)}
+                        >
                           <Eye className="mr-2 h-4 w-4" />
                           Ver Detalhes
                         </DropdownMenuItem>
@@ -188,7 +231,9 @@ const Instructors = () => {
                 </div>
               </div>
               <div className="text-center">
-                <h3 className="text-xl font-medium">{selectedInstructor.nome}</h3>
+                <h3 className="text-xl font-medium">
+                  {selectedInstructor.nome}
+                </h3>
                 <div className="flex items-center justify-center gap-4 mt-2">
                   <div className="flex items-center text-sm text-muted-foreground">
                     <Mail className="mr-1 h-4 w-4" />
@@ -204,20 +249,26 @@ const Instructors = () => {
               <div className="grid grid-cols-2 gap-4 pt-4">
                 <div>
                   <Label>ID</Label>
-                  <p className="text-sm font-medium">TP-{selectedInstructor.professorId}</p>
+                  <p className="text-sm font-medium">
+                    TP-{selectedInstructor.professorId}
+                  </p>
                 </div>
                 <div>
                   <Label>Data de Início</Label>
-                  <p className="text-sm font-medium">{selectedInstructor.dataInicio.split("T")[0]}</p>
+                  <p className="text-sm font-medium">
+                    {selectedInstructor.dataInicio.split("T")[0]}
+                  </p>
                 </div>
                 <div>
                   <Label>Status</Label>
                   <p>
-                    <Badge className={
-                      selectedInstructor.estado === "ativo" 
-                        ? "bg-green-100 text-green-800 hover:bg-green-100"
-                        : "bg-red-100 text-red-800 hover:bg-red-100"
-                    }>
+                    <Badge
+                      className={
+                        selectedInstructor.estado === "Ativo"
+                          ? "bg-green-100 text-green-800 hover:bg-green-100"
+                          : "bg-red-100 text-red-800 hover:bg-red-100"
+                      }
+                    >
                       {selectedInstructor.estado}
                     </Badge>
                   </p>
@@ -233,22 +284,35 @@ const Instructors = () => {
                 <div className="col-span-2">
                   <Label>Especialidades</Label>
                   <div className="flex flex-wrap gap-2 mt-1">
-                      <Badge key={selectedInstructor.especialidade} variant="outline" className="bg-gray-100">
-                        {selectedInstructor.especialidade}
-                      </Badge>
+                    <Badge
+                      key={selectedInstructor.especialidade}
+                      variant="outline"
+                      className="bg-gray-100"
+                    >
+                      {selectedInstructor.especialidade}
+                    </Badge>
                   </div>
                 </div>
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setShowDetailsDialog(false)}>
+              <Button
+                variant="outline"
+                onClick={() => setShowDetailsDialog(false)}
+              >
                 Fechar
               </Button>
-              <Button>Editar Instrutor</Button>
+              <Button>Imprimir</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
       )}
+
+      {/* Register instructor */}
+      <RegisterInstructorDialog
+        open={showRegisterDialog}
+        onOpenChange={setShowRegisterDialog}
+      />
     </MainLayout>
   );
 };
