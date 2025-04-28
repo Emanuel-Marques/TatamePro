@@ -61,6 +61,7 @@ export type InstructorData = {
 
 export type InstrutorData = {
   professorId: number;
+  utilizadorId?: number | string;
   nome: string;
   email: string;
   telefone: string;
@@ -79,6 +80,14 @@ export type PlanData = {
   modalities: string[];
   benefits: string[];
 };
+
+export type User = {
+  utilizador_id: string;
+  nome: string;
+  email: string;
+  senha: string;
+  perfil: "Root" | "Admin" | "Professor" | "Aluno";
+}
 
 export const athletesData: AthleteData[] = [
   {
