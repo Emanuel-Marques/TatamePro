@@ -59,6 +59,18 @@ export type InstructorData = {
   status: "active" | "inactive";
 };
 
+export type InstrutorData = {
+  professorId: number;
+  utilizadorId?: number | string;
+  nome: string;
+  email: string;
+  telefone: string;
+  especialidade: string;
+  grau?: string;
+  dataInicio: string;
+  estado: "ativo" | "inativo";
+};
+
 export type PlanData = {
   id: string;
   name: string;
@@ -68,6 +80,14 @@ export type PlanData = {
   modalities: string[];
   benefits: string[];
 };
+
+export type User = {
+  utilizador_id: string;
+  nome: string;
+  email: string;
+  senha: string;
+  perfil: "Root" | "Admin" | "Professor" | "Aluno";
+}
 
 export const athletesData: AthleteData[] = [
   {
